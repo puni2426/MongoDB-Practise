@@ -1,0 +1,181 @@
+> db.p2.updateOne({},{$set:{Vehicle_condition:4}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+> db.p2.aggregate([{$sort:{Delivery_person_Age:1}},{$limit:11},{$project:{Delivery_person_Age:1,_id:0}}])
+{ "Delivery_person_Age" : NaN }
+{ "Delivery_person_Age" : NaN }
+{ "Delivery_person_Age" : NaN }
+{ "Delivery_person_Age" : NaN }
+{ "Delivery_person_Age" : NaN }
+{ "Delivery_person_Age" : 20 }
+{ "Delivery_person_Age" : 20 }
+{ "Delivery_person_Age" : 20 }
+{ "Delivery_person_Age" : 20 }
+{ "Delivery_person_Age" : 20 }
+{ "Delivery_person_Age" : 20 }
+
+> db.p2.aggregate([{$project:{type:{$concat:["$Type_of_order"," ","$Type_of_vehicle"]}}},{$limit:11}])
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a64"), "type" : "Snack scooter" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a65"), "type" : "Drinks motorcycle" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a66"), "type" : "Buffet motorcycle" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a67"), "type" : "Snack motorcycle" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a68"), "type" : "Buffet motorcycle" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a69"), "type" : "Meal scooter" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a6a"), "type" : "Meal motorcycle" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a6b"), "type" : "Snack motorcycle" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a6c"), "type" : "Snack scooter" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a6d"), "type" : "Buffet motorcycle" }
+{ "_id" : ObjectId("64353bcc27e73eb0d6667a6e"), "type" : "Meal motorcycle" }
+
+}
+> db.p2.explain().find({City:"Metropolitian"})
+{
+	"queryPlanner" : {
+		"plannerVersion" : 1,
+		"namespace" : "GeoCoding.p2",
+		"indexFilterSet" : false,
+		"parsedQuery" : {
+			"City" : {
+				"$eq" : "Metropolitian"
+			}
+		},
+		"winningPlan" : {
+			"stage" : "FETCH",
+			"inputStage" : {
+				"stage" : "IXSCAN",
+				"keyPattern" : {
+					"City" : 1,
+					"Festival" : 1
+				},
+				"indexName" : "City_1_Festival_1",
+				"isMultiKey" : false,
+				"multiKeyPaths" : {
+					"City" : [ ],
+					"Festival" : [ ]
+				},
+				"isUnique" : false,
+				"isSparse" : false,
+				"isPartial" : false,
+				"indexVersion" : 2,
+				"direction" : "forward",
+				"indexBounds" : {
+					"City" : [
+						"[\"Metropolitian\", \"Metropolitian\"]"
+					],
+					"Festival" : [
+						"[MinKey, MaxKey]"
+					]
+				}
+			}
+		},
+		"rejectedPlans" : [
+			{
+				"stage" : "FETCH",
+				"inputStage" : {
+					"stage" : "IXSCAN",
+					"keyPattern" : {
+						"City" : 1
+					},
+					"indexName" : "City_1",
+					"isMultiKey" : false,
+					"multiKeyPaths" : {
+						"City" : [ ]
+					},
+					"isUnique" : false,
+					"isSparse" : false,
+					"isPartial" : false,
+					"indexVersion" : 2,
+					"direction" : "forward",
+					"indexBounds" : {
+						"City" : [
+							"[\"Metropolitian\", \"Metropolitian\"]"
+						]
+					}
+				}
+			}
+		]
+	},
+	"serverInfo" : {
+		"host" : "lpz-ee212821",
+		"port" : 27017,
+		"version" : "3.6.8",
+		"gitVersion" : "8e540c0b6db93ce994cc548f000900bdc740f80a"
+	},
+	"ok" : 1
+}
+
+> db.p2.deleteOne({})
+{ "acknowledged" : true, "deletedCount" : 1 }
+
+> db.p2.deleteMany({})
+{ "acknowledged" : true, "deletedCount" : 208 }
+
+> db.p2.count({})
+0
+
+> db.p2.createIndex({City:1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+
+> db.p2.createIndex({City:1,Festival:1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 2,
+	"numIndexesAfter" : 3,
+	"ok" : 1
+}
+
+> db.p2.getIndexes()
+[
+	{
+		"v" : 2,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "GeoCoding.p2"
+	},
+	{
+		"v" : 2,
+		"key" : {
+			"City" : 1
+		},
+		"name" : "City_1",
+		"ns" : "GeoCoding.p2"
+	},
+	{
+		"v" : 2,
+		"key" : {
+			"City" : 1,
+			"Festival" : 1
+		},
+		"name" : "City_1_Festival_1",
+		"ns" : "GeoCoding.p2"
+	}
+]
+
+> db.p2.dropIndex({City:1})
+{ "nIndexesWas" : 3, "ok" : 1 }
+
+> db.p2.dropIndex({City:1,Festival:1})
+{ "nIndexesWas" : 2, "ok" : 1 }
+
+> db.p2.getIndexes()
+[
+	{
+		"v" : 2,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "GeoCoding.p2"
+	}
+]
+
+> db.p2.dropIndex('City_1')
+{ "nIndexesWas" : 2, "ok" : 1 }
+
