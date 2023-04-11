@@ -1,0 +1,170 @@
+> use GeoCoding
+switched to db GeoCoding
+
+> show collections
+p1
+p2
+
+> db.p1.count()
+1000
+
+> db.p2.count()
+2000
+
+> db.p1.findOne()
+{
+	"_id" : ObjectId("641309d774f42f6bfcc70584"),
+	"ID" : "0xb379",
+	"Delivery_person_ID" : "BANGRES18DEL02",
+	"Delivery_person_Age" : 34,
+	"Delivery_person_Ratings" : 4.5,
+	"Restaurant_latitude" : 12.913041,
+	"Restaurant_longitude" : 77.683237,
+	"Delivery_location_latitude" : 13.043041,
+	"Delivery_location_longitude" : 77.813237,
+	"Order_Date" : "25-03-2022",
+	"Time_Orderd" : "19:45:00",
+	"Time_Order_picked" : "19:50:00",
+	"Weatherconditions" : "Stormy",
+	"Road_traffic_density" : "Jam",
+	"Vehicle_condition" : 2,
+	"Type_of_order" : "Snack",
+	"Type_of_vehicle" : "scooter",
+	"multiple_deliveries" : 1,
+	"Festival" : "No",
+	"City" : "Metropolitian",
+	"Time_taken" : 33
+}
+
+> db.p1.count({"Time_taken":{$gt:30}})
+298
+
+> db.p1.count({"Time_taken":{$lt:30}})
+673
+
+> db.p1.count({"Time_taken":{$lte:30}})
+702
+
+> db.p1.count({"Time_taken":{$eq:30}})
+29
+
+> db.p1.count({$and:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$gt:30}}]})
+1
+
+> db.p1.find({$and:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$gt:30}}]}).pretty()
+{
+	"_id" : ObjectId("641309d774f42f6bfcc70584"),
+	"ID" : "0xb379",
+	"Delivery_person_ID" : "BANGRES18DEL02",
+	"Delivery_person_Age" : 34,
+	"Delivery_person_Ratings" : 4.5,
+	"Restaurant_latitude" : 12.913041,
+	"Restaurant_longitude" : 77.683237,
+	"Delivery_location_latitude" : 13.043041,
+	"Delivery_location_longitude" : 77.813237,
+	"Order_Date" : "25-03-2022",
+	"Time_Orderd" : "19:45:00",
+	"Time_Order_picked" : "19:50:00",
+	"Weatherconditions" : "Stormy",
+	"Road_traffic_density" : "Jam",
+	"Vehicle_condition" : 2,
+	"Type_of_order" : "Snack",
+	"Type_of_vehicle" : "scooter",
+	"multiple_deliveries" : 1,
+	"Festival" : "No",
+	"City" : "Metropolitian",
+	"Time_taken" : 33
+}
+
+> db.p1.count({$or:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$eq:30}}]})
+30
+
+> db.p1.count({$or:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$eq:33}}]})
+24
+
+> db.p1.count({$or:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$eq:45}}]})
+3
+
+> db.p1.count({$and:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$gt:30}}]})
+1
+
+> db.p1.find({$or:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$eq:45}}]}).pretty()
+{
+	"_id" : ObjectId("641309d774f42f6bfcc70584"),
+	"ID" : "0xb379",
+	"Delivery_person_ID" : "BANGRES18DEL02",
+	"Delivery_person_Age" : 34,
+	"Delivery_person_Ratings" : 4.5,
+	"Restaurant_latitude" : 12.913041,
+	"Restaurant_longitude" : 77.683237,
+	"Delivery_location_latitude" : 13.043041,
+	"Delivery_location_longitude" : 77.813237,
+	"Order_Date" : "25-03-2022",
+	"Time_Orderd" : "19:45:00",
+	"Time_Order_picked" : "19:50:00",
+	"Weatherconditions" : "Stormy",
+	"Road_traffic_density" : "Jam",
+	"Vehicle_condition" : 2,
+	"Type_of_order" : "Snack",
+	"Type_of_vehicle" : "scooter",
+	"multiple_deliveries" : 1,
+	"Festival" : "No",
+	"City" : "Metropolitian",
+	"Time_taken" : 33
+}
+{
+	"_id" : ObjectId("641309d774f42f6bfcc706f4"),
+	"ID" : "0xc873",
+	"Delivery_person_ID" : "KOLRES15DEL03",
+	"Delivery_person_Age" : 31,
+	"Delivery_person_Ratings" : 4,
+	"Restaurant_latitude" : 22.552672,
+	"Restaurant_longitude" : 88.352885,
+	"Delivery_location_latitude" : 22.642672,
+	"Delivery_location_longitude" : 88.442885,
+	"Order_Date" : "14-02-2022",
+	"Time_Orderd" : "17:45:00",
+	"Time_Order_picked" : "17:55:00",
+	"Weatherconditions" : "Windy",
+	"Road_traffic_density" : "Medium",
+	"Vehicle_condition" : 0,
+	"Type_of_order" : "Drinks",
+	"Type_of_vehicle" : "motorcycle",
+	"multiple_deliveries" : 3,
+	"Festival" : "Yes",
+	"City" : "Metropolitian",
+	"Time_taken" : 45
+}
+{
+	"_id" : ObjectId("641309d774f42f6bfcc707fd"),
+	"ID" : "0xa077",
+	"Delivery_person_ID" : "PUNERES02DEL01",
+	"Delivery_person_Age" : 29,
+	"Delivery_person_Ratings" : 4.9,
+	"Restaurant_latitude" : 18.55144,
+	"Restaurant_longitude" : 73.804855,
+	"Delivery_location_latitude" : 18.62144,
+	"Delivery_location_longitude" : 73.874855,
+	"Order_Date" : "20-03-2022",
+	"Time_Orderd" : "19:40:00",
+	"Time_Order_picked" : "19:55:00",
+	"Weatherconditions" : "Fog",
+	"Road_traffic_density" : "Jam",
+	"Vehicle_condition" : 0,
+	"Type_of_order" : "Meal",
+	"Type_of_vehicle" : "motorcycle",
+	"multiple_deliveries" : 2,
+	"Festival" : "No",
+	"City" : "Metropolitian",
+	"Time_taken" : 45
+}
+
+> db.p1.find({$or:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$eq:45}}]},{"Delivery_person_ID":1,"Time_taken":1,"_id":0})
+{ "Delivery_person_ID" : "BANGRES18DEL02", "Time_taken" : 33 }
+{ "Delivery_person_ID" : "KOLRES15DEL03", "Time_taken" : 45 }
+{ "Delivery_person_ID" : "PUNERES02DEL01", "Time_taken" : 45 }
+
+> db.p1.find({$or:[{"Delivery_person_ID" : "BANGRES18DEL02"},{"Time_taken":{$eq:45}}]},{"Delivery_person_ID":1,"Time_taken":1,"_id":0}).limit(2)
+{ "Delivery_person_ID" : "BANGRES18DEL02", "Time_taken" : 33 }
+{ "Delivery_person_ID" : "KOLRES15DEL03", "Time_taken" : 45 }
+
